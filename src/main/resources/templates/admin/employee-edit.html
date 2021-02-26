@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">Админка</title>
+</head>
+
+<body>
+    <div th:remove="tag" th:replace="~{fragments/navbar :: navbar}"></div>
+    <br>
+    <br>
+
+    <div class="container">
+        <form class=""
+              method="post"
+              th:action="@{/admin/employees/update/{id} (id = ${employee.id})}"
+              th:object="${employee}">
+            <div class="form-group">
+                <label for="employee-name">Имя</label>
+                <input class="form-control" id="employee-name" placeholder="" th:field="*{name}"
+                       type="text">
+                <p class="alert alert-danger"
+                   th:errors="*{name}"
+                   th:if="${#fields.hasErrors('name')}">
+                    Ошибка при вводе имени
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="employee-surname">Фамилия</label>
+                <input class="form-control" id="employee-surname" placeholder="" th:field="*{surname}"
+                       type="text">
+                <p class="alert alert-danger"
+                   th:errors="*{surname}"
+                   th:if="${#fields.hasErrors('surname')}">
+                    Ошибка при вводе имени
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="employee-pay-rate">Зарплата</label>
+                <input class="form-control" id="employee-pay-rate" placeholder="" th:field="*{payRate}"
+                       type="number">
+                <p class="alert alert-danger"
+                   th:errors="*{payRate}"
+                   th:if="${#fields.hasErrors('payRate')}">
+                    Ошибка при вводе имени
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="employee-gender">Пол работника</label>
+                <select class="form-control" id="employee-gender" name="" th:field="*{gender}">
+                    <option th:each="gender : ${genders}"
+                            th:text="${gender.name}"
+                            th:value="${gender.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="employee-procedures">Что может делать</label>
+                <select class="form-control" id="employee-procedures" multiple="multiple"
+                        name="" th:field="*{canPerformProcedures}">
+                    <option th:each="procedure : ${procedures}"
+                            th:text="${procedure.name}"
+                            th:value="${procedure.id}">
+                    </option>
+                </select>
+            </div>
+
+            <button class="btn btn-success" type="submit">Изменить данные работника</button>
+        </form>
+    </div>
+
+</body>
+</html>

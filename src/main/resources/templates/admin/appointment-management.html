@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">Админка</title>
+</head>
+
+<body>
+    <div th:remove="tag" th:replace="~{fragments/navbar :: navbar}"></div>
+    <br>
+    <br>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>Имя/фамилия клиента</th>
+                    <th>Время и дата</th>
+                    <th>Мастер</th>
+                    <th>Услуга</th>
+                    <th>Управление</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="appointment : ${appointments}">
+                    <td th:text="${appointment.signedUpCustomer.name} + ' / ' + ${appointment.signedUpCustomer.surname}"></td>
+                    <td th:text="${appointment.date} + ' - ' + ${appointment.startTime}"></td>
+                    <td th:text="${appointment.performingEmployee.name} + ' ' + ${appointment.performingEmployee.surname}"></td>
+                    <td th:text="${appointment.salonProcedure.name}"></td>
+                    <td>
+                        <a class="btn btn-warning"
+                           th:href="@{/admin/appointments/edit/{aId}/customer/{cId} (aId = ${appointment.id}, cId = ${appointment.signedUpCustomer.id})}">
+                            Изменить запись
+                        </a>
+                        <span>&nbsp;</span>
+                        <a class="btn btn-danger" th:href="@{/admin/appointments/cancel/{id} (id = ${appointment.id})}">
+                            Отменить запись
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">Админка</title>
+</head>
+
+<body>
+    <div th:remove="tag" th:replace="~{fragments/navbar :: navbar}"></div>
+    <br>
+    <br>
+
+    <div class="container">
+        <h1>Админка</h1>
+        <!--suppress GrazieInspection -->
+        <h3 th:text="'Вы вошли, как ' + ${admin.name}"></h3>
+
+        <br />
+
+        <div>
+            <a class="btn btn-warning" th:href="@{/admin/employees}">Посмотреть информацию о всех работниках</a>
+        </div>
+        <br />
+        <div>
+            <a class="btn btn-warning" th:href="@{/admin/appointments}">Посмотреть информацию о записях</a>
+        </div>
+    </div>
+</body>
+</html>

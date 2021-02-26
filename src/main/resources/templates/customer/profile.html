@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">Личный кабинет</title>
+</head>
+
+<body>
+    <div th:remove="tag" th:replace="~{fragments/navbar :: navbar}"></div>
+    <br>
+    <br>
+
+    <div class="container">
+        <h1 th:text="'Вы вошли как ' + ${customer.name}"></h1>
+
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Название</th>
+                    <th>Время и дата</th>
+                    <th>Мастер</th>
+                    <th>Управление</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="appointment : ${appointmentsForCustomer}">
+                    <td th:text="${appointment.salonProcedure.name}"></td>
+                    <td th:text="${appointment.date} + ' - ' + ${appointment.startTime}"></td>
+                    <td th:text="${appointment.performingEmployee.name} + ' ' + ${appointment.performingEmployee.surname}"></td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/profile/appointments/edit/{id} (id = ${appointment.id})}">
+                            Изменить запись
+                        </a>
+
+                        <a class="btn btn-danger" th:href="@{/profile/appointments/cancel/{id} (id = ${appointment.id})}">
+                            Отказаться от записи
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+
+        <!--TODO: Изменить ссылки-->
+        <a class="btn btn-warning" th:href="@{/profile/edit/}">
+            Редактировать профиль
+        </a>
+    </div>
+
+</body>
+</html>

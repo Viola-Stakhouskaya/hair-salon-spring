@@ -1,0 +1,7 @@
+build app using maven:
+>> ./mvnw clean package
+
+command above packages code into Java jar file
+
+then run:
+>> java -jar -Dspring.profiles.active=prod target/hair-salon-app.jar

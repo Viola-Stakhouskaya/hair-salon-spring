@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">Админка</title>
+</head>
+
+<body>
+    <div th:remove="tag" th:replace="~{fragments/navbar :: navbar}"></div>
+    <br>
+    <br>
+
+    <div class="container">
+        <div>
+            <a class="btn btn-success" th:href="@{/admin/employees/new}">
+                Добавить работника
+            </a>
+        </div>
+
+        <br />
+
+        <!--Список работников-->
+        <div class="jumbotron-fluid">
+            <h1>Список работников</h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Имя работника</th>
+                    <th>Фамилия работника</th>
+                    <th>Зарплата</th>
+                    <th>Процедуры, которые может выполнять</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.surname}"></td>
+                    <td th:text="${employee.payRate}"></td>
+                    <td>
+                        <ul th:each="procedure : ${employee.canPerformProcedures}">
+                            <li th:text="${procedure.name}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/admin/employees/edit/{id} (id = ${employee.id})}">
+                            Изменить
+                        </a>
+
+                        <a class="btn btn-danger" th:href="@{/admin/employees/delete/{id} (id = ${employee.id})}">
+                            Удалить
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

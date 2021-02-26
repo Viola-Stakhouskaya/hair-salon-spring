@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">Запись на процедуру</title>
+</head>
+
+<body>
+    <div th:remove="tag" th:replace="~{fragments/navbar :: navbar}"></div>
+    <br>
+    <br>
+
+    <div class="container">
+        <h1>Записаться</h1>
+        <form method="post"
+              th:action="@{/procedure/signup}"
+              th:object="${appointment}">
+            <div class="form-group">
+                <label for="employee-selector">Выбрать мастера</label>
+                <select class="form-control" id="employee-selector" name="" th:field="*{performingEmployee}">
+                    <option th:each="employee : ${employees}"
+                            th:text="${employee.name} + ' ' + ${employee.surname}"
+                            th:value="${employee.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="procedure-selector">Выбрать процедуру</label>
+                <select class="form-control" id="procedure-selector" name="" th:field="*{salonProcedure}">
+                    <option th:each="procedure : ${procedures}"
+                            th:text="${procedure.name}"
+                            th:value="${procedure.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="procedure-date">Выберите дату</label>
+                <input id="procedure-date" name="procedure-date" th:field="*{date}" type="date">
+            </div>
+
+            <div class="form-group">
+                <label for="procedure-time">Выберите время</label>
+                <input id="procedure-time" name="procedure-date" th:field="*{startTime}" type="time">
+            </div>
+
+            <button class="btn btn-success" type="submit">Записаться</button>
+        </form>
+    </div>
+</body>
+</html>

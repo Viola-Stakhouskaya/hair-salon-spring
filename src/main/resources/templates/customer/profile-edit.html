@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: headFragment}">
+    <title id="pageTitle">ChangeProfile</title>
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <a class="btn btn-info btn-md btn-block" th:href="@{/}">Отменить и вернуться на домашнюю страницу</a>
+        <br>
+
+        <h1>Редактировать профиль</h1>
+
+        <form method="post" th:action="@{/profile}" th:object="${customer}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Имя</label>
+                    <input class="form-control" id="name"
+                           placeholder="Иван"
+                           th:field="*{name}" type="text">
+                    <label class="alert alert-danger" for="name"
+                           th:errors="*{name}"
+                           th:if="${#fields.hasErrors('name')}">
+                        Ошибка при вводе имени
+                    </label>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="surname">Фамилия</label>
+                    <input class="form-control" id="surname"
+                           placeholder="Иванов"
+                           th:field="*{surname}" type="text">
+                    <label class="alert alert-danger" for="surname"
+                           th:errors="*{surname}"
+                           th:if="${#fields.hasErrors('surname')}">
+                        Ошибка при вводе фамилии
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="email">Имейл</label>
+                <input class="form-control" id="email"
+                       placeholder="example@email.com"
+                       th:field="*{email}" type="email">
+                <label class="alert alert-danger" for="email"
+                       th:errors="*{email}"
+                       th:if="${#fields.hasErrors('email')}">
+                </label>
+                <!--<div class="alert alert-danger" th:if="${registrationError}" th:text="${registrationError}"></div>-->
+            </div>
+
+            <div class="form-group">
+                <label for="login">Логин</label>
+                <input class="form-control" id="login"
+                       th:field="*{login}" type="text">
+                <label class="alert alert-danger" for="login"
+                       th:errors="*{login}"
+                       th:if="${#fields.hasErrors('login')}">
+                </label>
+                <!--<div class="alert alert-danger" th:if="${registrationError}" th:text="${registrationError}"></div>-->
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input class="form-control" id="password"
+                       th:field="*{password}" th:value="*{password}" type="password">
+                <label class="alert alert-danger" for="password"
+                       th:errors="*{password}"
+                       th:if="${#fields.hasErrors('password')}">
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordConfirmation">Повторите пароль</label>
+                <input class="form-control" id="passwordConfirmation"
+                       name="passwordConfirmation" type="password">
+                <label class="alert alert-danger" for="passwordConfirmation"
+                       th:if="${passwordError}"
+                       th:text="${passwordError}">
+                </label>
+            </div>
+
+            <button class="btn btn-primary" th:href="@{/profile/}" type="submit">Подтвердить</button>
+        </form>
+
+        <br>
+
+    </div>
+
+    <div th:remove="tag" th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
