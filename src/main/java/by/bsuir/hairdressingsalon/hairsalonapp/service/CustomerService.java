@@ -41,14 +41,22 @@ public class CustomerService implements UserDetailsService {
         return customerRepository.findById(id);
     }
 
-    public Customer save(Customer customer) {
+    public boolean save(Customer customer) {
+        Optional<Customer> customerToCheckAgainst = customerRepository.findByLoginOrEmail(
+                customer.getLogin(),
+                customer.getEmail()
+        );
+
+        if (customerToCheckAgainst.isPresent()) {
+            return false;
+        }
+
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customer.setRoles(Collections.singleton(Role.USER));
-        // todo: Set gender
         customer.setActive(true);
 
         customerRepository.save(customer);
-        return customer;
+        return true;
     }
 
     public void updateProfile(Customer original, Customer updated) {

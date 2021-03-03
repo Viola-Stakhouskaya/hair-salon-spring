@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
-
 @Controller
 public class AuthController {
     private final CustomerService customerService;
@@ -38,19 +36,15 @@ public class AuthController {
             return "security/registration";
         }
 
-        Optional<Customer> customerFromDB = customerService
-                .findByLoginOrEmail(customer.getLogin(), customer.getEmail());
-        if (customerFromDB.isPresent()) {
-            model.addAttribute("registrationError", "Этот логин/имейл уже используется");
-            return "security/registration";
-        }
-
         if (customer.getPassword() != null && !customer.getPassword().equals(passwordConfirmation)) {
             model.addAttribute("passwordError", "Пароли не совпадают");
             return "security/registration";
         }
 
-        customerService.save(customer);
+        if (!customerService.save(customer)) {
+            model.addAttribute("registrationError", "Этот логин/имейл уже используется");
+            return "security/registration";
+        }
 
         return "redirect:/login";
     }
